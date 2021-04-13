@@ -1,5 +1,5 @@
 # Testing SVmodelExamples
-library(SVmodelExamples)
+library(SVmodelRcppSMC)
 set.seed(123)
 Tinit      <- 100
 phiXinit   <- 0.9
@@ -22,10 +22,10 @@ starting_vals      <- c(phiXinit, 20, 20)
 conditional_x_init <- c(Xinit, xt)
 system.time(
   out_pg_r <- pg_sv(y = yt,
-                    Nparticles = particle_number,
+                    num_particles = particle_number,
                     starting_values = starting_vals,
-                    Niter = MM,
-                    XcondInit = conditional_x_init,
+                    num_iter = MM,
+                    x_r_init = conditional_x_init,
                     as_sampling = TRUE)
 )
 plot_pmcmc_output(output_pmcmc= out_pg_r,

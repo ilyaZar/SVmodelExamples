@@ -1,5 +1,5 @@
 # Testing SVmodelExamples
-library(SVmodelExamples)
+library(SVmodelRcppSMC)
 set.seed(123)
 Tinit      <- 100
 phiXinit   <- 0.9

@@ -1,4 +1,4 @@
-library(SVmodelExamples)
+library(SVmodelRcppSMC)
 dat <- read.csv("./data/logreturns2012to2014.csv", header = F)
 measurements <- dat[, 1]
 # Now with a FINER grid:
@@ -20,8 +20,8 @@ for (j in 1:num_simul) {
     print(paste(j,":",i))
   }
 }
-SVmodelExamples::plot_boxplot_loglike_estimates(out_log_like,
-                                                par_seq_phi,
-                                                num_simul)
+plot_boxplot_loglike_estimates(out_log_like,
+                               par_seq_phi,
+                               num_simul)
 
 
