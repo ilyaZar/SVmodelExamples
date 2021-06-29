@@ -20,4 +20,4 @@ starting_vals <- c(phiXinit, 2, 2)
 res <- sv_model_al_tracking(data = yt,
                      starting_vals = starting_vals,
                      particles = particle_number,
-                     resample_freq = 0.5)
+                     resampleFreq = 0.5)
