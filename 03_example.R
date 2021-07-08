@@ -6,28 +6,40 @@ phiXinit   <- 0.9
 sigmaXinit <- 0.2
 betaYinit  <- 0.7
 Xinit      <- 0
-data_simul_sv <- generate_data_simul_sv(TT = Tinit,
-                                        phi_x = phiXinit,
-                                        sigma_x = sigmaXinit,
-                                        beta_y = betaYinit,
-                                        init_state_x0 = Xinit)
-xt <- data_simul_sv$states_xt
-yt <- data_simul_sv$measurements_yt
+data_simul_sv <- generateDataSimulSV(TT = Tinit,
+                                     phiX = phiXinit,
+                                     sigmaX = sigmaXinit,
+                                     betaY = betaYinit,
+                                     initStateX0 = Xinit)
+xt <- data_simul_sv$statesXt
+yt <- data_simul_sv$measurementsYt
 
-particle_number <- 20
+particleNumber <- 20
 MM    <- 5000
 burn  <- 4000 #round(MM/2)
 
-starting_vals      <- c(phiXinit, 20, 20)
-conditional_x_init <- c(Xinit, xt)
+startingVals      <- c(phiXinit, 20, 20)
+conditionalXinit <- c(Xinit, xt)
 system.time(
-  out_pg_r <- pg_sv(y = yt,
-                    num_particles = particle_number,
-                    starting_values = starting_vals,
-                    num_iter = MM,
-                    x_r_init = conditional_x_init,
-                    as_sampling = TRUE)
+  outPG <- svModelPG(data = yt,
+                     particles = particleNumber,
+                     startingVals = startingVals,
+                     iterations = MM,
+                     startingTrajectory = conditionalXinit,
+                     10)
 )
-plot_pmcmc_output(output_pmcmc= out_pg_r,
-                  burnin = burn,
-                  true_vals = c(sigmaXinit, betaYinit))
+system.time(
+  outPGr <- svModelPGr(y = yt,
+                       numParticles = particleNumber,
+                       startingValues = startingVals,
+                       numIter = MM,
+                       xRinit = conditionalXinit,
+                       asSampling = TRUE,
+                       10)
+)
+plotPMCMCoutput(outputPMCMC =  outPGr,
+                burnin = burn,
+                trueVals = c(sigmaXinit, betaYinit))
+plotPMCMCoutput(outputPMCMC =  outPG,
+                burnin = burn,
+                trueVals = c(sigmaXinit, betaYinit))

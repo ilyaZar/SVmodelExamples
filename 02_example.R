@@ -6,38 +6,41 @@ phiXinit   <- 0.9
 sigmaXinit <- 0.15
 betaYinit  <- 0.9
 Xinit      <- 0
-data_simul_sv <- generate_data_simul_sv(TT = Tinit,
-                                        phi_x = phiXinit,
-                                        sigma_x = sigmaXinit,
-                                        beta_y = betaYinit,
-                                        init_state_x0 = Xinit)
-xt <- data_simul_sv$states_xt
-yt <- data_simul_sv$measurements_yt
+dataSimulSV <- generateDataSimulSV(TT = Tinit,
+                                   phiX = phiXinit,
+                                   sigmaX = sigmaXinit,
+                                   betaY = betaYinit,
+                                   initStateX0 = Xinit)
+xt <- dataSimulSV$statesXt
+yt <- dataSimulSV$measurementsYt
 
-particle_number <- 5000
+particleNumber <- 5000
 MM    <- 1000
 burn  <- round(MM/2)
-rw_sd <- c(0.1, 0.1)
-starting_vals <- c(phiXinit, 2, 2)
+rwSD <- c(0.1, 0.1)
+startingVals <- c(phiXinit, 2, 2)
 system.time(
-out_pmmh_smctc <- sv_model_pmmh(data = yt,
-                                starting_vals = starting_vals,
-                                rw_mh_sd = rw_sd,
-                                particles = particle_number,
-                                iterations = MM,
-                                burnin = burn)
+outPMMHsmctc <- svModelPMMH(data = yt,
+                            initVals = startingVals,
+                            rwMHsd = rwSD,
+                            particles = particleNumber,
+                            iterations = MM,
+                            burnin = burn)
 )
-plot_pmcmc_output(output_pmcmc = out_pmmh_smctc,
-                  burn,
-                  true_vals = c(sigmaXinit, betaYinit))
+plotPMCMCoutput(outputPMCMC = outPMMHsmctc,
+                burn,
+                trueVals = c(sigmaXinit, betaYinit))
 system.time(
-out_pmmh_r <- pmmh_sv(num_particles = particle_number,
-                      rw_vcm_prop = diag(rw_sd^2),
-                      y = yt,
-                      starting_vals = starting_vals,
-                      num_iter = MM)
+  outPMMHr <- svModelPMMHr(numParticles = particleNumber,
+                           rwVCMprop = diag(rwSD^2),
+                           y = yt,
+                           initVals = startingVals,
+                           numIter = MM)
 )
-plot_pmcmc_output(output_pmcmc = out_pmmh_r,
-                  burn,
-                  true_vals = c(sigmaXinit, betaYinit))
+plotPMCMCoutput(outputPMCMC = outPMMHr,
+                burnin = burn,
+                trueVals = c(sigmaXinit, betaYinit))
+plotPMCMCoutput(outputPMCMC = outPMMHsmctc,
+                burnin = burn,
+                trueVals = c(sigmaXinit, betaYinit))
 
