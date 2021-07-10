@@ -4,7 +4,7 @@ set.seed(123)
 Tinit      <- 100
 phiXinit   <- 0.9
 sigmaXinit <- 0.2
-betaYinit  <- 0.7
+betaYinit  <- 1.7
 Xinit      <- 0
 dataSimulSV <- generateDataSimulSV(TT = Tinit,
                                    phiX = phiXinit,
@@ -14,15 +14,15 @@ dataSimulSV <- generateDataSimulSV(TT = Tinit,
 xt <- dataSimulSV$statesXt
 yt <- dataSimulSV$measurementsYt
 
-particleNumber <- 20
+particleNumber <- 1000
 MM    <- 5000
-burn  <- 4000 # round(MM/2)
+burn  <- round(MM/2)
 
 startingVals       <- c(phiXinit, 20, 20)
 startingTrajectory <- c(Xinit, xt)
 # system.time(
 set.seed(42)
-outPG <- svmodelPG(data = yt,
+outPG <- svModelPG(data = yt,
                    startingVals = startingVals,
                    startingTrajectory = startingTrajectory,
                    particles = particleNumber,
