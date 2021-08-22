@@ -19,6 +19,7 @@ MM    <- 1000
 burn  <- round(MM/2)
 rwSD <- c(0.1, 0.1)
 startingVals <- c(phiXinit, 2, 2)
+rwSD <- c(0.1, 0.1)
 system.time(
 outPMMHsmctc <- svModelPMMH(data = yt,
                             initVals = startingVals,
@@ -40,12 +41,3 @@ system.time(
 plotPMCMCoutput(outputPMCMC = outPMMHr,
                 burnin = burn,
                 trueVals = c(sigmaXinit, betaYinit))
-plotPMCMCoutput(outputPMCMC = outPMMHsmctc,
-                burnin = burn,
-                trueVals = c(sigmaXinit, betaYinit))
-plot_pmcmc_output(output_pmcmc = out_pmmh_r,
-                  burn,
-                  true_vals = c(sigmaXinit, betaYinit))
-plot_pmcmc_output(outputPMCMC = out_pmmh_r,
-                  burn,
-                  trueVals = c(sigmaXinit, betaYinit))
