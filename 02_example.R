@@ -43,4 +43,9 @@ plotPMCMCoutput(outputPMCMC = outPMMHr,
 plotPMCMCoutput(outputPMCMC = outPMMHsmctc,
                 burnin = burn,
                 trueVals = c(sigmaXinit, betaYinit))
-
+plot_pmcmc_output(output_pmcmc = out_pmmh_r,
+                  burn,
+                  true_vals = c(sigmaXinit, betaYinit))
+plot_pmcmc_output(outputPMCMC = out_pmmh_r,
+                  burn,
+                  trueVals = c(sigmaXinit, betaYinit))
